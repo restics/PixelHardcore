@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16.5-1.1 ALPHA'
+version = '1.16.5-1.2 ALPHA'
 group = 'com.pixelizedgaming.hardcorepixelmon' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'hardcorepixelmon'
 
@@ -122,7 +122,7 @@ dependencies {
 
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
 
-    implementation fg.deobf('com.pixelmonmod.pixelmon:Pixelmon-1.16.5-9.0.6-universal:0.0.1')
+    implementation fg.deobf('com.pixelmonmod.pixelmon:Pixelmon-1.16.5-9.0.10-universal:0.0.1')
 
 }
 
