@@ -18,6 +18,7 @@ import net.minecraft.server.ServerPropertiesProvider;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -44,8 +45,8 @@ public class PlayerWhiteOutEvent {
         boolean isPvpBattle = e.getPlayers().size() > 1;
 
 
-        if (e.cause == BattleEndCause.NORMAL && WHITE_OUT_KILL_TOGGLE) {
-            for (Map.Entry<BattleParticipant, BattleResults> entry : e.results.entrySet()) {
+        if (e.getCause() == BattleEndCause.NORMAL && WHITE_OUT_KILL_TOGGLE) {
+            for (Map.Entry<BattleParticipant, BattleResults> entry : e.getResults().entrySet()) {
                 LivingEntity participantEntity = entry.getKey().getEntity();
                 if (!(participantEntity instanceof ServerPlayerEntity)) continue;
                 ServerPlayerEntity p = (ServerPlayerEntity) participantEntity;
@@ -74,7 +75,9 @@ public class PlayerWhiteOutEvent {
                         LOGGER.debug(p.getFaintedPokemon().getPokemonName() + " has fainted!");
                         playerEntity.dropItem(poke.getHeldItem().copy(), false);
                         StorageProxy.getParty(playerEntity).set(slot,null);
-                        playerEntity.sendMessage(new StringTextComponent(TextFormatting.RED + "Because Nuzlocke Rules are turned on, your " + poke.getDisplayName() + TextFormatting.RED + " was released due to fainting."), playerEntity.getUniqueID());
+                        TranslationTextComponent text = new TranslationTextComponent("pixelmon.hardcore.nuzzlocke", poke.getDisplayName());
+                        text.mergeStyle(TextFormatting.RED);
+                        playerEntity.sendMessage(text, playerEntity.getUniqueID());
                     }
                 }
             }

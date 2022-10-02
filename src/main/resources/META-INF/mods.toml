@@ -34,7 +34,7 @@ credits="Hell yeah man" #optional
 authors="PixelizedGaming" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Makes Pixelmon actually hard.
+Makes Pixelmon actually hard
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.examplemod]] #optional
