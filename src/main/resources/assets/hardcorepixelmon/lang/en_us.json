@@ -1,4 +1,5 @@
 {
   "death.attack.whiteout.name": "%1$s has whited out",
-  "pixelmon.hardcore.nuzzlocke": "Because nuzlocke mode is enabled, your %1$s was released."
+  "pixelmon.hardcore.nuzlocke": "Because nuzlocke mode is enabled, your %1$s was released.",
+  "pixelmon.hardcore.catcher": "Because catcher mode is enabled, %1$s cannot be caught."
 }

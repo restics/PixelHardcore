@@ -16,9 +16,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.ServerPropertiesProvider;
 import net.minecraft.server.management.PlayerList;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +31,6 @@ import java.util.Objects;
 @Mod.EventBusSubscriber(modid = HardcorePixelmon.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerWhiteOutEvent {
     private static final Logger LOGGER = LogManager.getLogger();
-
 
     static{
         Pixelmon.EVENT_BUS.register(new PlayerWhiteOutEvent());
@@ -51,8 +49,8 @@ public class PlayerWhiteOutEvent {
                 if (!(participantEntity instanceof ServerPlayerEntity)) continue;
                 ServerPlayerEntity p = (ServerPlayerEntity) participantEntity;
                 LOGGER.info("Battle Result  : " + entry.getValue());
-                if (entry.getValue() == BattleResults.DEFEAT && !isPvpBattle){
-                    p.attackEntityFrom(DamageSourceWhiteOut.WHITE_OUT.setDamageBypassesArmor().setDamageIsAbsolute().setDamageAllowedInCreativeMode(), Float.MAX_VALUE);
+                if (entry.getValue() == BattleResults.DEFEAT && !isPvpBattle && !e.isAbnormal()){
+                    p.die(DamageSource.OUT_OF_WORLD);
                     StorageProxy.getParty(p).setBalance(Math.round(StorageProxy.getParty(p).getBalance().doubleValue() * WHITE_OUT_BAL_MULTIPLIER));
                 }
             }
@@ -73,11 +71,10 @@ public class PlayerWhiteOutEvent {
                     if (poke == null) continue;
                     if (poke.getHealth() <= 0){
                         LOGGER.debug(p.getFaintedPokemon().getPokemonName() + " has fainted!");
-                        playerEntity.dropItem(poke.getHeldItem().copy(), false);
+                        playerEntity.drop(poke.getHeldItem().copy(), false);
                         StorageProxy.getParty(playerEntity).set(slot,null);
-                        TranslationTextComponent text = new TranslationTextComponent("pixelmon.hardcore.nuzzlocke", poke.getDisplayName());
-                        text.mergeStyle(TextFormatting.RED);
-                        playerEntity.sendMessage(text, playerEntity.getUniqueID());
+                        TranslationTextComponent text = new TranslationTextComponent("pixelmon.hardcore.nuzlocke", poke.getDisplayName());
+                        playerEntity.sendMessage(text, playerEntity.getUUID());
                     }
                 }
             }

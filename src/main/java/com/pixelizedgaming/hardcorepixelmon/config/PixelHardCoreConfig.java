@@ -9,6 +9,7 @@ public class PixelHardCoreConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> white_out_deduction;
     public static final ForgeConfigSpec.ConfigValue<Boolean> nuzlocke_mode;
     public static final ForgeConfigSpec.ConfigValue<Boolean> whiteout_mode;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> catcher_mode;
 
     static{
         BUILDER.push("PixelHardcore Config");
@@ -18,6 +19,8 @@ public class PixelHardCoreConfig {
         nuzlocke_mode = BUILDER.comment("Toggles Nuzlocke mode. A fainted pokemon in Nuzlocke mode is immediately released, with items dropping to the floor.").define("Nuzlocke Mode", false);
 
         whiteout_mode = BUILDER.comment("Toggles White Out mode. Whiting out with this mode enabled kills the player.").define("White Out Mode", true);
+
+        catcher_mode = BUILDER.comment("Toggles Catcher mode. Catcher mode disables catches above the player's max level.").define("Catcher Mode", true);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }
